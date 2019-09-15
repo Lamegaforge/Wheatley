@@ -22,7 +22,8 @@ class Thujohn implements Driver
             'count' => 30, 
             'format' => 'array',
             'include_rts' => false,
-            'exclude_replies' => false
+            'exclude_replies' => false,
+            'tweet_mode' => 'extended',
         ];
 
         return Twitter::getUserTimeline($parameters);
