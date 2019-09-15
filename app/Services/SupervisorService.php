@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Exception;
+
 class SupervisorService
 {
     protected $storage;
@@ -18,11 +20,11 @@ class SupervisorService
         return $this->storage->has($fileName);
     }
 
-    public function lock(string $botName, string $message)
+    public function lock(string $botName, Exception $exception)
     {
         $fileName = $this->getFileName($botName);
 
-        $this->storage->put($fileName, $message);
+        $this->storage->put($fileName, $exception);
     }
 
     protected function getFileName($botName) :string

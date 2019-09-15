@@ -63,7 +63,7 @@ class SendOnTweetsThread extends Command
             }
 
         } catch (Exception $exception) {
-            app(SupervisorService::class)->lock('tweets-aggregator', $exception->getMessage());
+            app(SupervisorService::class)->lock('tweets-aggregator', $exception);
         }
     }
 
@@ -102,7 +102,7 @@ class SendOnTweetsThread extends Command
 
             app(TweetRepository::class)->create([
                 'hash' => $tweet['id'],
-                'text' => $tweet['text'],
+                'text' => $tweet['full_text'],
             ]);
         }
     }
