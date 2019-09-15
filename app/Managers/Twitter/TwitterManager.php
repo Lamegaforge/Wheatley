@@ -23,6 +23,6 @@ class TwitterManager extends Manager
 
     public function getDefaultDriver()
     {
-        return $this->app['config']['managers']['twitter']['default_driver'];
+        return $this->app['config']['manager']['twitter']['default_driver'];
     }
 }
