@@ -17,7 +17,7 @@ class DiscordEmbedService
                 'icon_url' => $parameters['user']['profile_image_url_https'],
             ],
             'url' => 'http://lamegaforge.fr',
-            'description' => $parameters['text'],
+            'description' => $parameters['full_text'],
             'color' => 14370374,
             'image' => $media
         ];
