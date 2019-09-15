@@ -19,7 +19,7 @@ class DiscordEmbedService
             'url' => 'http://lamegaforge.fr',
             'description' => $parameters['text'],
             'color' => 14370374,
-            'image' => $parameters
+            'image' => $media
         ];
     }
 }
