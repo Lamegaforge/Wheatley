@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
+use Event;
 use Config;
 use Exception;
 use Illuminate\Console\Command;
+use App\Events\TweetHasBeenSend;
 use App\Exceptions\BotException;
 use App\Services\TwitterService;
 use Illuminate\Support\Collection;
@@ -12,7 +14,6 @@ use App\Services\SupervisorService;
 use App\Repositories\TweetRepository;
 use App\Services\DiscordEmbedService;
 use App\Services\DiscordWebhookService;
-use Illuminate\Database\QueryException;
 
 class SendOnTweetsThread extends Command
 {
@@ -63,7 +64,7 @@ class SendOnTweetsThread extends Command
                 $this->send($tweets);
             }
 
-        } catch (QueryException $exception) {
+        } catch (Exception $exception) {
             app(SupervisorService::class)->lock('tweets-aggregator', $exception);
         }
     }
@@ -99,12 +100,13 @@ class SendOnTweetsThread extends Command
 
             $embed = app(DiscordEmbedService::class)->makeTweetEmbed($tweet);
 
-            app(DiscordWebhookService::class)->sendOnTweetsThread($embed);
+            $response = app(DiscordWebhookService::class)->sendOnTweetsThread($embed);
 
-            app(TweetRepository::class)->create([
-                'hash' => $tweet['id'],
-                'text' => $tweet['full_text'],
-            ]);
+            if (! $response->itsGood()) {
+                continue;
+            }
+
+            Event::dispatch(new TweetHasBeenSend($tweet));
         }
     }
 }

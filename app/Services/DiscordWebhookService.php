@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\ClientInterface;
 use App\Managers\Twitter\TwitterManager;
 
@@ -16,7 +17,7 @@ class DiscordWebhookService
         $this->config = $config;
     }
 
-    public function sendOnTweetsThread(array $embed)
+    public function sendOnTweetsThread(array $embed) :DiscordWebhookResponse
     {
         $parameters = [
             'username' => $this->config['parameters']['tweets_thread']['bot']['username'], 
@@ -29,13 +30,15 @@ class DiscordWebhookService
 
         $url = $this->config['parameters']['tweets_thread']['url'];
 
-        $this->post($url, $parameters);
+        return $this->post($url, $parameters);
     }
 
-    protected function post(string $url, array $parameters)
+    protected function post(string $url, array $parameters) :DiscordWebhookResponse
     {
-        $result = $this->clientHttp->post($url, [
+        $response = $this->clientHttp->post($url, [
             'json' => $parameters
-        ]);    
+        ]);
+
+        return new DiscordWebhookResponse($response);
     }
 }
