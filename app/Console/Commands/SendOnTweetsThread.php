@@ -12,6 +12,7 @@ use App\Services\SupervisorService;
 use App\Repositories\TweetRepository;
 use App\Services\DiscordEmbedService;
 use App\Services\DiscordWebhookService;
+use Illuminate\Database\QueryException;
 
 class SendOnTweetsThread extends Command
 {
@@ -62,7 +63,7 @@ class SendOnTweetsThread extends Command
                 $this->send($tweets);
             }
 
-        } catch (Exception $exception) {
+        } catch (QueryException $exception) {
             app(SupervisorService::class)->lock('tweets-aggregator', $exception);
         }
     }
