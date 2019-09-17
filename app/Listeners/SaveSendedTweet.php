@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use Illuminate\Support\Str;
 use App\Events\TweetHasBeenSend;
 use App\Repositories\TweetRepository;
 
@@ -29,7 +30,7 @@ class SaveSendedTweet
     {
         $this->tweetRepository->create([
             'hash' => $event->tweet['id'],
-            'text' => $event->tweet['full_text'],
+            'text' => Str::limit($event->tweet['full_text'], 150, '...'),
         ]);
     }
 }
