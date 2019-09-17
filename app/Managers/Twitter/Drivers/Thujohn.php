@@ -2,6 +2,7 @@
 
 namespace App\Managers\Twitter\Drivers;
 
+use RunTimeException;
 use App\Managers\Twitter\Tweet;
 use Thujohn\Twitter\Facades\Twitter;
 use App\Managers\Twitter\Contracts\Driver;
@@ -17,15 +18,21 @@ class Thujohn implements Driver
 
     public function getUserTimeline($screenName) :array
     {
-        $parameters = [
-            'screen_name' => $screenName, 
-            'count' => 30, 
-            'format' => 'array',
-            'include_rts' => false,
-            'exclude_replies' => false,
-            'tweet_mode' => 'extended',
-        ];
+        try {
+            
+            $parameters = [
+                'screen_name' => $screenName, 
+                'count' => 30, 
+                'format' => 'array',
+                'include_rts' => false,
+                'exclude_replies' => false,
+                'tweet_mode' => 'extended',
+            ];
 
-        return Twitter::getUserTimeline($parameters);
+            return Twitter::getUserTimeline($parameters);
+
+        } catch (RunTimeException $e) {
+            return [];
+        }
     }    
 }
