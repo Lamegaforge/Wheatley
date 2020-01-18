@@ -4,14 +4,13 @@ return [
     'twitter_accounts_of_assholes' => [
         'AdwimLMF',
         'poleon99',
-        'Spiderweb441fr',
+        'SpidaireLMF',
         'YadarLMF',
         'ScadLMF',
         'Wheesky_LMF',
         'RuruLMF',
         'lamegaforge',
-        'momolmf',
-
+        'MomoLMF',
     ],
     'parameters' => [
         'tweets_thread' => [
