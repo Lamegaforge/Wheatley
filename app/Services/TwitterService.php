@@ -25,7 +25,17 @@ class TwitterService
     protected function purgeUselessTweets(array $tweets) :array
     {
         return array_filter($tweets, function ($tweet) {
-            return in_array('lamegaforge', array_pluck($tweet['entities']['hashtags'], 'text'), true);
+
+            $hashtags = array_map(function ($hashtag) {
+                return strtolower($hashtag);
+            }, array_pluck($tweet['entities']['hashtags'], 'text'));
+
+            $collision = array_intersect($hashtags, [
+                'lamegaforge',
+                'lmf'
+            ]);
+
+            return ! empty($collision);
         });
     }
 }
