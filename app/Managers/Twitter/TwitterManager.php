@@ -2,7 +2,7 @@
 
 namespace App\Managers\Twitter;
 
-use Illuminate\Support\Manager;
+use DeGraciaMathieu\Manager\Manager;
 use App\Managers\Twitter\Contracts\Driver;
 
 class TwitterManager extends Manager
@@ -16,6 +16,15 @@ class TwitterManager extends Manager
         return $this->getRepository($driver);
     }
    
+    public function createMockDriver()
+    {
+        $config = [];
+
+        $driver = new Drivers\Mock($config);
+
+        return $this->getRepository($driver);
+    }
+
     public function getRepository(Driver $driver)
     {
         return new Repository($driver);
