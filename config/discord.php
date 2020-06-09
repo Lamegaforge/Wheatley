@@ -3,7 +3,7 @@
 return [
     'twitter_accounts_of_assholes' => [
         'AdwimLMF',
-        'poleon99',
+        'PoleonLMF',
         'SpidaireLMF',
         'YadarLMF',
         'ScadLMF',
